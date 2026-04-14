@@ -1,68 +1,100 @@
 # Prompt Coach
 
-Prompt Coach is a local-first web app that helps ordinary users turn rough requests into stronger AI prompts.
+> A multilingual AI prompt coach that turns plain-language requests into stronger, scenario-aware prompts for real-world tasks.
 
-The core belief behind the project is simple: most people do not want to become formal prompt engineers before they can benefit from AI. They want to describe what they need in normal language and still get strong results. Prompt Coach tries to close that gap.
+Prompt Coach is a local-first web app for people who want better AI results without having to learn prompt engineering first.
 
-## Why This Project Exists
+Instead of asking users to build prompts from scratch, the app starts from a normal request, detects the likely use case, and upgrades that request into a more structured and usable prompt.
 
-A lot of people already use AI, but many still ask for things in a vague way:
+## Why It Matters
 
-- "help me write this better"
-- "make a prompt for studying"
-- "ask AI to explain this"
+Most people already use AI, but many still struggle with the same gap:
 
-Those requests are understandable, but they often lead to generic answers. Prompt Coach tries to close that gap by adding:
+- they know what they want
+- they do not know how to ask for it well
+- they get generic answers because the input is too vague
 
-- a clearer role
-- a specific objective
-- a target audience
-- a tone
-- an output format
-- useful constraints
+Prompt Coach is designed to close that gap.
+
+It focuses on a simple idea: a user should be able to write one rough request and still receive a stronger, more task-aware prompt.
+
+## What The Product Does
+
+- Accepts a plain-language request
+- Detects language automatically across English, Chinese, and Spanish
+- Identifies the likely use case behind the request
+- Generates a stronger prompt with clearer structure and better defaults
+- Explains what the system added and why it matters
+- Produces prompt variations for different levels of structure
+
+## Current Product Highlights
+
+- Low-friction workflow with one primary input field
+- Scenario-aware prompt generation for study, communication, career, support, and technical tasks
+- An optimization report that makes system-added structure visible
+- Multilingual UI and multilingual prompt output
+- Local-first MVP with no external API dependency
+- Lightweight test coverage for the prompt engine
+
+## Preview
+
+The current repo already includes three core product surfaces:
+
+| Surface | What it shows | Why it matters |
+| --- | --- | --- |
+| Main workspace | A low-friction input flow with optional advanced controls | Keeps the experience accessible for non-technical users |
+| Optimization report | The role, scenario strategy, delivery spec, and guardrails added by the system | Makes the product value explicit instead of hiding it inside one long prompt |
+| Scenario-aware output | Different prompt structures for teacher communication, exam tutoring, interview prep, and more | Moves the project beyond generic prompt rewriting |
+
+Recommended screenshot order for the GitHub homepage:
+
+1. Main workspace overview
+2. Study-use-case result with the optimization report visible
+3. Scenario-specific output example such as teacher communication or interview prep
+
+## Core Workflow
+
+```text
+Raw request
+  -> language detection
+  -> use-case detection
+  -> stronger prompt structure
+  -> optimization report
+  -> prompt variations
+```
 
 ## Product Direction
 
-This project is not trying to be another prompt storage tool for developers.
+This project is not trying to become another prompt storage tool for developers.
 
-It is trying to become a coaching layer for normal users:
+It is trying to become a coaching layer for regular users:
 
 - one simple input first
 - stronger prompts automatically
-- optional advanced controls later
-- explanations that help the user improve over time
-- automatic tone and format selection when the user does not want to decide
+- optional controls later
+- explanations that teach while they help
+- better outcomes, not just prettier wording
 
-## MVP Scope
+## Example Use Cases
 
-This version focuses on one job and does it clearly:
+- A student wants AI to act like a better physics exam helper
+- A user wants to write a respectful professor email without sounding manipulative
+- A job seeker wants a stronger interview answer with better examples
+- A stressed user wants a calmer, more practical way to frame a personal situation
 
-1. Accept a raw user request in plain language
-2. Convert it into an improved prompt
-3. Explain what changed
-4. Generate a few useful prompt variations
-5. Support English, Chinese, and Spanish
-6. Infer useful defaults so the user does not need to fill a long form
+## Tech Stack
 
-The app is intentionally local-first and dependency-light so the product idea stays easy to understand.
-
-## Features
-
-- Single main input for low-friction use
-- Optional advanced settings for users who want more control
-- Automatic tone and format selection for common scenarios
-- Prompt optimization with a simple coaching engine
-- Prompt variations for different use cases
-- Three-language UI and prompt output support
-- Copy-ready output
-- A polished interface that works on desktop and mobile
-- No external API required for the MVP
+- Vanilla HTML, CSS, and JavaScript
+- Small Node server for local development
+- Heuristic prompt engine for the MVP
+- Minimal dependency surface to keep the project easy to run and easy to understand
 
 ## Project Structure
 
 ```text
 prompt-coach/
 ├── docs/
+│   ├── roadmap.md
 │   └── timeline.md
 ├── src/
 │   ├── app.js
@@ -75,9 +107,7 @@ prompt-coach/
 └── server.js
 ```
 
-## How To Run
-
-From the `prompt-coach` folder:
+## Run Locally
 
 ```bash
 npm start
@@ -89,44 +119,41 @@ Then open:
 http://localhost:4173
 ```
 
-## How To Test
+## Test
 
 ```bash
 npm test
 ```
 
-## Bigger Vision
+## Roadmap
 
-This repo is the first version of a bigger idea: a tool that helps regular users become better prompt engineers without making them study prompt engineering first.
+The next phase is already scoped in a more product-like way.
 
-Future directions:
+See:
 
-- model-specific prompt styles
-- task-specific prompt packs
-- side-by-side prompt comparison
-- prompt quality scoring
-- history and saved drafts
-- optional AI-powered prompt rewriting
-- document upload and task-specific agent tuning
-- education-focused prompt optimization for course materials and mock exams
-- study workflows that adapt prompts around one specific class instead of generic homework help
+- [docs/timeline.md](./docs/timeline.md)
+- [docs/roadmap.md](./docs/roadmap.md)
 
-## Design Notes
+## Longer-Term Vision
 
-- The project avoids heavy dependencies on purpose.
-- The app is easy to read, easy to demo, and easy to build on.
-- The first screen is intentionally simpler than before because ordinary users should not have to fill a large prompt form.
-- The visual style is meant to feel intentional instead of looking like a generic dashboard.
-- The product direction is moving toward better outcomes, not just prettier prompt text.
+The bigger opportunity is not just prompt cleanup.
+
+The more valuable direction is helping users tune AI for real tasks:
+
+- course-specific study prompting
+- uploaded slides and mock exams
+- task-specific prompt systems
+- model-aware prompt styles
+- optional LLM-backed rewriting mode
+- saved history and reusable prompt sessions
 
 ## Status
 
-This project is at the MVP stage, but the core interaction is already usable:
+Prompt Coach is currently at the MVP stage, but the core interaction is already working:
 
 - write a rough request
 - get a stronger prompt
-- understand why it improved
-- switch between English, Chinese, and Spanish
-- rely on automatic defaults when you do not want to fine-tune settings
+- see what the system added
+- copy a result that is more usable than the original input
 
-That is enough to communicate the product direction clearly on GitHub.
+That is enough to demonstrate both the product idea and the next logical direction.
