@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prompt Coach</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-top-row">
+          <p class="eyebrow" data-i18n="eyebrow">Prompt Coach</p>
+          <label class="language-switcher">
+            <span data-i18n="languageLabel">Language</span>
+            <select id="language">
+              <option value="en">English</option>
+              <option value="zh">中文</option>
+              <option value="es">Español</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="hero-content">
+          <div>
+            <h1 data-i18n="heroTitle">Turn rough ideas into better AI prompts.</h1>
+            <p class="hero-copy" data-i18n="heroCopy">
+              Describe what you want in plain language. The app rewrites it into a
+              stronger prompt, explains the upgrade, and gives you a few versions
+              you can use right away.
+            </p>
+          </div>
+
+          <aside class="hero-product-card">
+            <p class="hero-card-label" data-i18n="heroCardLabel">Product Positioning</p>
+            <h2 data-i18n="heroCardTitle">Built for real users, not prompt hobbyists.</h2>
+            <p data-i18n="heroCardCopy">
+              The product goal is simple: help ordinary people get better AI results
+              without having to learn prompt engineering first.
+            </p>
+            <div class="hero-trust-row">
+              <span class="hero-trust-pill" data-i18n="trustPill1">Auto language match</span>
+              <span class="hero-trust-pill" data-i18n="trustPill2">Use-case detection</span>
+              <span class="hero-trust-pill" data-i18n="trustPill3">Prompt lift scoring</span>
+            </div>
+          </aside>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="panel input-panel">
+          <div class="panel-heading">
+            <h2 data-i18n="inputTitle">What do you want help with?</h2>
+            <p data-i18n="inputCopy">
+              Keep it simple. Write the way you would normally ask a person.
+            </p>
+          </div>
+
+          <label class="field">
+            <span data-i18n="taskLabel">Your request</span>
+            <textarea
+              id="rawPrompt"
+              data-placeholder-key="taskPlaceholder"
+              placeholder="Example: I want AI to help me write a respectful message to my professor asking for a short extension."
+            ></textarea>
+          </label>
+
+          <p id="languageNotice" class="notice-chip" data-i18n="languageNoticeIdle">
+            We can match the language of your input automatically.
+          </p>
+
+          <div class="quick-hints">
+            <button class="hint-pill" data-fill="study" data-i18n="hintStudy" type="button">
+              Study help
+            </button>
+            <button class="hint-pill" data-fill="email" data-i18n="hintEmail" type="button">
+              Email writing
+            </button>
+            <button class="hint-pill" data-fill="career" data-i18n="hintCareer" type="button">
+              Career prep
+            </button>
+            <button class="hint-pill" data-fill="support" data-i18n="hintSupport" type="button">
+              Personal support
+            </button>
+          </div>
+
+          <details class="advanced-panel">
+            <summary data-i18n="advancedSummary">Optional advanced settings</summary>
+
+            <div class="advanced-grid">
+              <label class="field">
+                <span data-i18n="goalLabel">Goal</span>
+                <input
+                  id="goal"
+                  type="text"
+                  data-placeholder-key="goalPlaceholder"
+                  placeholder="What result do you want?"
+                />
+              </label>
+
+              <label class="field">
+                <span data-i18n="audienceLabel">Audience</span>
+                <input
+                  id="audience"
+                  type="text"
+                  data-placeholder-key="audiencePlaceholder"
+                  placeholder="Who is this for?"
+                />
+              </label>
+
+              <label class="field">
+                <span data-i18n="toneLabel">Tone</span>
+                <select id="tone">
+                  <option value="" data-i18n="toneAuto">Auto</option>
+                  <option value="clear" data-i18n="toneClear">Clear</option>
+                  <option value="friendly" data-i18n="toneFriendly">Friendly</option>
+                  <option value="professional" data-i18n="toneProfessional">Professional</option>
+                  <option value="supportive" data-i18n="toneSupportive">Supportive</option>
+                  <option value="direct" data-i18n="toneDirect">Direct</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span data-i18n="formatLabel">Output format</span>
+                <select id="format">
+                  <option value="" data-i18n="formatAuto">Auto</option>
+                  <option value="paragraphs" data-i18n="formatParagraphs">Paragraphs</option>
+                  <option value="bullet list" data-i18n="formatBulletList">Bullet list</option>
+                  <option value="step by step plan" data-i18n="formatStepByStep">Step by step plan</option>
+                  <option value="table" data-i18n="formatTable">Table</option>
+                  <option value="script" data-i18n="formatScript">Script</option>
+                </select>
+              </label>
+            </div>
+
+            <label class="field">
+              <span data-i18n="constraintsLabel">Constraints</span>
+              <input
+                id="constraints"
+                type="text"
+                data-placeholder-key="constraintsPlaceholder"
+                placeholder="Any limits, must-haves, or boundaries?"
+              />
+            </label>
+          </details>
+
+          <div class="button-row">
+            <button id="optimizeButton" class="primary" data-i18n="optimizeButton" type="button">
+              Optimize Prompt
+            </button>
+            <button id="exampleButton" class="ghost" data-i18n="exampleButton" type="button">
+              Load Example
+            </button>
+            <button id="clearButton" class="ghost" data-i18n="clearButton" type="button">
+              Clear
+            </button>
+          </div>
+        </section>
+
+        <section class="panel output-panel" id="outputPanel">
+          <div class="panel-heading">
+            <h2 data-i18n="resultsTitle">Results</h2>
+            <p data-i18n="resultsCopy">
+              A stronger prompt plus guidance you can learn from.
+            </p>
+          </div>
+
+          <div class="summary-shell">
+            <div class="summary-headline">
+              <h3 data-i18n="summaryTitle">Session Snapshot</h3>
+              <p data-i18n="summaryCopy">
+                A quick read on what the system detected and how much stronger your prompt became.
+              </p>
+            </div>
+
+            <div class="summary-grid">
+              <article class="summary-card summary-card-accent">
+                <span class="summary-label" data-i18n="summaryLiftLabel">Prompt lift</span>
+                <strong id="summaryLift" class="summary-value">+0</strong>
+                <p id="summaryLiftDetail" class="summary-detail" data-i18n="summaryPlaceholder">Waiting for your first prompt.</p>
+              </article>
+
+              <article class="summary-card">
+                <span class="summary-label" data-i18n="summaryLanguageLabel">Detected language</span>
+                <strong id="summaryLanguage" class="summary-value">-</strong>
+                <p class="summary-detail" data-i18n="summaryLanguageCopy">We follow the language the user actually writes in.</p>
+              </article>
+
+              <article class="summary-card">
+                <span class="summary-label" data-i18n="summaryCategoryLabel">Detected use case</span>
+                <strong id="summaryCategory" class="summary-value">-</strong>
+                <p class="summary-detail" data-i18n="summaryCategoryCopy">The engine shapes the prompt around the real task.</p>
+              </article>
+
+              <article class="summary-card">
+                <span class="summary-label" data-i18n="summaryModeLabel">Optimization mode</span>
+                <strong id="summaryMode" class="summary-value">-</strong>
+                <p id="summaryModeDetail" class="summary-detail" data-i18n="summaryModeCopy">Auto mode keeps things simple until the user asks for more control.</p>
+              </article>
+            </div>
+          </div>
+
+          <div class="output-block">
+            <div class="output-title-row">
+              <h3 data-i18n="optimizedPromptTitle">Optimized Prompt</h3>
+              <button id="copyPromptButton" class="mini" data-i18n="copyButton" type="button">
+                Copy
+              </button>
+            </div>
+            <pre id="optimizedPrompt" class="output-box placeholder-box" data-i18n="promptPlaceholder">Your improved prompt will appear here.</pre>
+          </div>
+
+          <div class="output-block">
+            <div class="report-title-row">
+              <h3 data-i18n="reportTitle">Optimization Report</h3>
+              <p data-i18n="reportCopy">A clearer view of what the system added beyond your original request.</p>
+            </div>
+            <div id="upgradeReport" class="report-grid">
+              <article class="report-card placeholder-card" data-i18n="reportPlaceholder">
+                System additions will appear here after optimization.
+              </article>
+            </div>
+          </div>
+
+          <div class="output-block">
+            <h3 data-i18n="changesTitle">What Changed</h3>
+            <ul id="explanations" class="explanation-list">
+              <li data-i18n="changesPlaceholder">Write a request to generate your coaching notes.</li>
+            </ul>
+          </div>
+
+          <div class="output-block">
+            <h3 data-i18n="variationsTitle">Prompt Variations</h3>
+            <div id="variations" class="variation-grid">
+              <article class="variation-card placeholder-card" data-i18n="variationsPlaceholder">
+                Variations will appear here after optimization.
+              </article>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <section class="panel principles">
+        <div class="panel-heading">
+          <h2 data-i18n="principlesTitle">Built for regular people, not prompt experts.</h2>
+          <p data-i18n="principlesCopy">
+            The goal is not to impress developers. The goal is to make AI easier
+            to use well.
+          </p>
+        </div>
+
+        <div class="principle-grid">
+          <article>
+            <h3 data-i18n="principle1Title">Less setup</h3>
+            <p data-i18n="principle1Copy">
+              Most people should only need one text box.
+            </p>
+          </article>
+          <article>
+            <h3 data-i18n="principle2Title">More guidance</h3>
+            <p data-i18n="principle2Copy">
+              The app explains why the new prompt is stronger.
+            </p>
+          </article>
+          <article>
+            <h3 data-i18n="principle3Title">Better outcomes</h3>
+            <p data-i18n="principle3Copy">
+              The product should raise response quality, not just polish wording.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel roadmap-panel">
+        <div class="panel-heading">
+          <h2 data-i18n="roadmapTitle">Where this can go next</h2>
+          <p data-i18n="roadmapCopy">
+            The bigger opportunity is not just prompt cleanup. It is helping people tune AI for real tasks.
+          </p>
+        </div>
+
+        <div class="roadmap-grid">
+          <article>
+            <h3 data-i18n="roadmap1Title">Study agent tuning</h3>
+            <p data-i18n="roadmap1Copy">
+              Let students upload slides and mock exams so the system can shape prompts around a specific course.
+            </p>
+          </article>
+          <article>
+            <h3 data-i18n="roadmap2Title">Task-specific coaching</h3>
+            <p data-i18n="roadmap2Copy">
+              Build flows for studying, job applications, email writing, and personal planning.
+            </p>
+          </article>
+          <article>
+            <h3 data-i18n="roadmap3Title">Result quality first</h3>
+            <p data-i18n="roadmap3Copy">
+              Focus on getting more useful answers, not just prettier prompts.
+            </p>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <script src="./src/engine.js"></script>
+    <script src="./src/app.js"></script>
+  </body>
+</html>
